@@ -1,0 +1,260 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Utilization.SiteMaster" %>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">   
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">    
+    </asp:ContentPlaceHolder>
+</head>
+<body >
+  <form id="Form1" runat="server" style="height: auto"> 
+  <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+  <div class="page" style="height: auto">  
+        <div align="center" 
+                
+            style="background-color: #FF0000; color: #000000; font-weight: bolder; ">
+                 <asp:RadioButtonList ID="RadioButtonList1" runat="server" 
+                    RepeatDirection="Horizontal" AutoPostBack="True" 
+                     onselectedindexchanged="RadioButtonList1_SelectedIndexChanged" >
+                    <asp:ListItem>English</asp:ListItem>
+                    <asp:ListItem Selected="True">中文</asp:ListItem>
+                </asp:RadioButtonList>
+                </div>    
+        <div class="header">
+            <div class="title">
+                <h1 align="left">
+                    <asp:Label ID="Label1" runat="server" Text="CNC&nbsp;分散式(跨廠)監控中心"></asp:Label>
+                    <asp:Image ID="Image1" runat="server" Height="32px" ImageUrl="~/Ut_Data/images/Quaser1.png"
+                        Width="92px" ImageAlign="AbsMiddle" />
+                </h1>
+            </div>            
+            <div class="loginDisplay" align="right">
+                <asp:Button ID="Button_Area4" runat="server" Height="32px" OnClick="Button_Area4_Click"
+                    Style="margin-left: 0px" Text="第四廠區" Width="90px" Visible="False" />
+                <asp:Button ID="Button_Area3" runat="server" Height="32px" OnClick="Button_Area3_Click"
+                    Style="margin-left: 0px" Text="第三廠區" Width="90px" Visible="False" />
+                <asp:Button ID="Button_Area2" runat="server" Height="32px" OnClick="Button_Area2_Click"
+                    Style="margin-left: 0px" Text="第二廠區" Width="90px" Visible="False" />
+                <asp:Button ID="Button_Area1" runat="server" Height="32px"                    
+                    OnClick="Button_Area1_Click" Text="第一廠區" Width="90px" />                    
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" id="HeadLoginStatus" runat="server">登入</a> ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        歡迎 <span class="bold">
+                            <asp:LoginName ID="HeadLoginName" runat="server" />
+                        </span>! [
+                        <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="登出"
+                            LogoutPageUrl="~/" />
+                        ]
+                    </LoggedInTemplate>                
+                    <RoleGroups>
+                        <asp:RoleGroup Roles="Admin">
+                        </asp:RoleGroup>
+                        <asp:RoleGroup Roles="User">
+                        </asp:RoleGroup>
+                        <asp:RoleGroup Roles="Guest">
+                        </asp:RoleGroup>
+                    </RoleGroups>
+                </asp:LoginView>                
+            </div>
+            <div class="menu">
+            <asp:UpdatePanel ID="UpdatePanelMenu" runat="server" UpdateMode="Conditional">    
+            <ContentTemplate>
+                <asp:Menu ID="Menu1" runat="server" CssClass="menu" IncludeStyleBlock="False"
+                    Orientation="Horizontal" Visible="False" DisappearAfter="0" 
+                    DynamicEnableDefaultPopOutImage="False" StaticEnableDefaultPopOutImage="False">
+                    <Items>
+                        <asp:MenuItem Text="機台統計" Value="機台統計" NavigateUrl="~/Default.aspx" >
+                            <asp:MenuItem NavigateUrl="~/Default.aspx" Text="稼動率統計" Value="稼動率">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="程式號統計" Value="程式號統計" NavigateUrl="~/O_number.aspx"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Renishaw.aspx" Text="量測結果統計" Value="量測結果統計"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="機台監控" Value="機台監控" NavigateUrl="~/Monitor.aspx">
+                            <asp:MenuItem NavigateUrl="~/SpindleLoad.aspx" Text="主軸/伺服軸負載" Value="主軸/伺服軸負載">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Monitor.aspx" Text="機台監控資訊" Value="機台監控資訊"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Parameters.aspx" Text="參數/診斷/PMC資訊" 
+                                Value="參數/診斷/PMC資訊"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Histry.aspx" Text="操作歷史/警告訊息" Value="操作歷史/警告訊息"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="查詢" Value="查詢" NavigateUrl="~/DataBase.aspx">
+                            <asp:MenuItem Text="歷史資料查詢" Value="歷史資料查詢" NavigateUrl="~/DataBase.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="警告編號查詢" Value="警告編號查詢" NavigateUrl="~/Ut_Data/Alarm0/"></asp:MenuItem>
+                            <asp:MenuItem Text="參數手冊" Value="參數手冊">
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/18i-B-63530EN_03.pdf" Text="18i" Value="18i">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/0i-D-64310EN_01.pdf" Text="0i" Value="0i">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/30i-B-64490EN_02.pdf" Text="30i" Value="30i">
+                                </asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="維修手冊" Value="維修手冊">
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/18i-B-63525EN_02.pdf" Text="18i" Value="18i">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/0i-B-64305EN_01.pdf" Text="0i" Value="0i">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/30i-B-64485EN_01.pdf" Text="30i" Value="30i">
+                                </asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/QUASERMV.pdf" Text="操作手冊" Value="操作手冊">
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/QUASERMV.pdf" Text="Quaser MV系列" Value="Quaser MV系列">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/QUASERHX.pdf" Text="Quaser HX系列" Value="Quaser HX系列"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Ut_Data/telephone.htm" Text="聯絡電話" Value="聯絡電話"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="程式中心" Value="程式中心" NavigateUrl="~/ProgCenter.aspx">
+                            <asp:MenuItem Text="程式中心" Value="程式中心" NavigateUrl="~/ProgCenter.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="備份中心" Value="備份中心" NavigateUrl="~/ProgBackup.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="自動化" Value="自動化" NavigateUrl="~/Automatic1.aspx">
+                            <asp:MenuItem NavigateUrl="~/Automatic1.aspx" Text="1.識別監控CNC" Value="1.識別監控CNC">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Automatic1.aspx" Text="2.控制項定義&amp;條件設定" Value="2.控制項定義&amp;條件設定"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Automatic1.aspx" Text="3.監控操作&amp;監控畫面" Value="3.監控操作&amp;監控畫面"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="工作日誌/製令單" Value="工作日誌/製令單" NavigateUrl="~/WorkLog.aspx">
+                            <asp:MenuItem Text="製令派工單" Value="製令派工單" NavigateUrl="~/Jobs.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="工作日誌" Value="工作日誌" NavigateUrl="~/WorkLog.aspx"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Ut_Data/shift.htm" Text="輪排班表" Value="輪排班表"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Holiday.aspx" Text="休放假日" Value="休放假日"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="庫存/進出料現況" Value="庫存/進出料現況" NavigateUrl="~/Warehouse.aspx">
+                            <asp:MenuItem Text="庫存記錄/登記" Value="庫存記錄/登記" NavigateUrl="~/Warehouse.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="進出料記錄/登記" Value="進出料記錄/登記" NavigateUrl="~/InputOutput.aspx">
+                            </asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/BulletinBoard.aspx" Text="關於" >
+                            <asp:MenuItem NavigateUrl="~/Account/Login.aspx" Text="Login" Value="Login"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/BulletinBoard.aspx" Text="公告欄" Value="公告欄">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/About.aspx" Text="本網站" Value="本網站"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin.aspx" Text="網站管理" Value="網台管理">
+                            </asp:MenuItem>
+                        </asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+                </ContentTemplate>
+                </asp:UpdatePanel>
+             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">    
+                <ContentTemplate>
+                <asp:Menu ID="Menu0" runat="server" CssClass="menu" IncludeStyleBlock="False"
+                    Orientation="Horizontal" Visible="False" DisappearAfter="0" 
+                    DynamicEnableDefaultPopOutImage="False" StaticEnableDefaultPopOutImage="False">
+                    <Items>
+                        <asp:MenuItem Text="Statistic" Value="Statistic" NavigateUrl="~/Default.aspx" >
+                            <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Utilization" Value="稼動率">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="O_Number" Value="O_Number" 
+                                NavigateUrl="~/O_number.aspx"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Renishaw.aspx" Text="Renishaw" Value="Renishaw"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="CNC Status" Value="機台監控" NavigateUrl="~/Monitor.aspx">
+                            <asp:MenuItem NavigateUrl="~/SpindleLoad.aspx" Text="Spindle/Server Loading" 
+                                Value="主軸/伺服軸負載">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Monitor.aspx" Text="CNC Status" 
+                                Value="機台監控資訊"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Parameters.aspx" Text="Parameter/Diagnose/PMC Info" 
+                                Value="參數/診斷/PMC資訊"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Histry.aspx" Text="Operator History/Alarm Msg" 
+                                Value="操作歷史/警告訊息"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Search" Value="查詢" NavigateUrl="~/DataBase.aspx">
+                            <asp:MenuItem Text="History data" Value="歷史統計查詢" 
+                                NavigateUrl="~/DataBase.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Alarm no. manual" Value="警告編號查詢" 
+                                NavigateUrl="~/Ut_Data/Alarm0/"></asp:MenuItem>
+                            <asp:MenuItem Text="Parameter manual" Value="參數手冊">
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/18i-B-63530EN_03.pdf" Text="18i" Value="18i">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/0i-D-64310EN_01.pdf" Text="0i" Value="0i">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/30i-B-64490EN_02.pdf" Text="30i" Value="30i">
+                                </asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Maintenance manual" Value="維修手冊">
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/18i-B-63525EN_02.pdf" Text="18i" Value="18i">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/0i-B-64305EN_01.pdf" Text="0i" Value="0i">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/30i-B-64485EN_01.pdf" Text="30i" Value="30i">
+                                </asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/QUASERMV.pdf" Text="Operation manual" 
+                                Value="操作手冊">
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/QUASERMV.pdf" Text="Quaser MV Series" 
+                                    Value="Quaser MV系列">
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Ut_Data/pdf/QUASERHX.pdf" Text="Quaser HX Series" Value="Quaser HX Series"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Ut_Data/telephone.htm" Text="Telephone" 
+                                Value="聯絡電話"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Program Center" Value="程式中心" 
+                            NavigateUrl="~/ProgCenter.aspx">
+                            <asp:MenuItem Text="Program Center" Value="程式中心" 
+                                NavigateUrl="~/ProgCenter.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Backup Center" Value="備份中心" 
+                                NavigateUrl="~/ProgBackup.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Automation" Value="自動化" NavigateUrl="~/Automatic1.aspx">
+                            <asp:MenuItem NavigateUrl="~/Automatic1.aspx" Text="1.Identify CNC" 
+                                Value="1.識別監控CNC">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Automatic1.aspx" Text="2.Control items&amp;conditions define" Value="2.Control items&amp;conditions define"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Automatic1.aspx" Text="3.Operating &amp; Monitoring" Value="3.Operating &amp; Monitoring"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Log/Order" Value="工作日誌/製令單" NavigateUrl="~/WorkLog.aspx">
+                            <asp:MenuItem Text="Manufacturing Order" Value="製令派工單" 
+                                NavigateUrl="~/Jobs.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Work Log" Value="工作日誌" NavigateUrl="~/WorkLog.aspx"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Ut_Data/shift.htm" Text="Shifts " Value="輪排班表"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Holiday.aspx" Text="Holidays" Value="休放假日"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Stock/Raws" Value="庫存/進出料現況" 
+                            NavigateUrl="~/Warehouse.aspx">
+                            <asp:MenuItem Text="Stock " Value="庫存紀錄/登記" NavigateUrl="~/Warehouse.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Raws Input/Output" Value="進出料紀錄/登記" 
+                                NavigateUrl="~/InputOutput.aspx">
+                            </asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/About.aspx" Text="About" >
+                            <asp:MenuItem NavigateUrl="~/Account/Login.aspx" Text="Login" Value="Login"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/BulletinBoard.aspx" Text="Bulletin Board" 
+                                Value="公告欄">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/About.aspx" Text="this Site" Value="本網站"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin.aspx" Text="Site Management" Value="網台管理">
+                            </asp:MenuItem>
+                        </asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+              </ContentTemplate>
+            </asp:UpdatePanel> 
+            </div> 
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+        <div class="clear"></div>
+  </div>
+        <div class="footer">   
+        <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="http://www.quaser.com">我的公司</asp:HyperLink><br/>     
+        <asp:HyperLink ID="HyperLink1" runat="server" 
+                NavigateUrl="https://maps.google.com.tw/maps/myplaces?hl=zh-TW&amp;ll=24.399546,120.651664&amp;spn=0.011979,0.01929&amp;ctz=-480&amp;brcurrent=3,0x346ef3065c07572f:0xe711f004bf9c5469,0&amp;num=10&amp;t=m&amp;z=16&amp;iwloc=A">
+        No.3,Gong 6th Rd.,Youshih Industrial Park,Dajia Dist.,Taichung City 437, Taiwan
+        Tel: +886-4-2682-1277 Fax:+886-4-2682-1266 </asp:HyperLink>
+        <br /><a href="http://www.quaser.com">百德機械股份有限公司&nbsp;版權所有 © 2013 QUASER MACHINE TOOLS, INC. All Rights Reserved.
+        </div>
+  </form>
+</body>
+</html>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Hosts>
+  <Host>127.0.0.1-VirtualMachine</Host>
+  <Host>192.168.1.115-18i</Host>
+  <Host>192.168.1.72-MV154</Host>
+</Hosts>
